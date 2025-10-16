@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - FahmiMaw Portfolio</title>
+    <meta name="description" content="Curriculum Vitae Fahmi Maulana - Web Developer & Software Engineer">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* CV Specific Styles */
+        .cv-hero {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            padding: 8rem 0 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cv-hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -30%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        .cv-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -30%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.05) 0%, transparent 70%);
+            animation: rotate 30s linear infinite reverse;
+        }
+
+        .cv-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cv-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .cv-hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .download-section {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .download-btn {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .view-btn {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .view-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .cv-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--bg-primary);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            margin-top: -2rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .cv-header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 3rem;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            border: 4px solid var(--primary-color);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cv-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .cv-title {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .cv-contact {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            color: var(--text-secondary);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cv-section {
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .cv-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px var(--shadow-medium);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.75rem;
+            top: 1.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            border: 3px solid var(--bg-primary);
+        }
+
+        .timeline-date {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-subtitle {
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+
+        .timeline-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-category h4 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .skill-name {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .skill-level {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-bar {
+            width: 80px;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 3px;
+            width: 0;
+            transition: width 2s ease;
+        }
+
+        .skill-percentage {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .projects-highlight {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-highlight {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .project-highlight:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px var(--shadow-medium);
+        }
+
+        .project-highlight h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-highlight p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .achievement-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .achievement-card h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .certifications {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .cert-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+
+        .cert-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .cert-info h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .cert-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .language-item {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+
+        .language-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .language-level {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .rating-stars {
+            color: var(--primary-color);
+            margin-top: 0.5rem;
+        }
+
+        /* Print Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .cv-container, .cv-container * {
+                visibility: visible;
+            }
+            .cv-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100% !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .download-section {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cv-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .cv-contact {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .timeline {
+                padding-left: 1rem;
+            }
+
+            .timeline-item {
+                padding: 1rem;
+            }
+
+            .timeline-item::before {
+                left: -1.75rem;
+            }
+
+            .download-section {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader">
+            <div class="spinner"></div>
+            <p>Loading CV...</p>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="scroll-to-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Theme Toggle -->
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <img src="../img/LogoRekadua.png" alt="FahmiMaw" />
+                <span>FahmiMaw</span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-links" id="navLinks">
+                <a href="../index.html" class="nav-link">Beranda</a>
+                <div class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Portfolio <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="blog.html">Blog</a>
+                        <a href="projects.html">Projects</a>
+                        <a href="cv.html">CV</a>
+                    </div>
+                </div>
+                <a href="../index.html#about" class="nav-link">Tentang</a>
+                <a href="../index.html#contact" class="nav-link">Kontak</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CV Hero -->
+    <section class="cv-hero">
+        <div class="container">
+            <div class="cv-hero-content">
+                <h1 class="fade-in">Curriculum Vitae</h1>
+                <p class="fade-in">Profil profesional lengkap dengan pengalaman, keahlian, dan pencapaian dalam bidang web development</p>
+                
+                <div class="download-section fade-in">
+                    <a href="#" onclick="downloadCV()" class="download-btn">
+                        <i class="fas fa-download"></i>
+                        Download PDF
+                    </a>
+                    <button onclick="printCV()" class="download-btn view-btn">
+                        <i class="fas fa-print"></i>
+                        Print CV
+                    </button>
+                    <a href="https://github.com/fahmimaw" target="_blank" rel="noopener" class="download-btn view-btn">
+                        <i class="fab fa-github"></i>
+                        GitHub Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CV Content -->
+    <main class="container">
+        <div class="cv-container" id="cvContainer">
+            <!-- CV Header -->
+            <div class="cv-header">
+                <div class="profile-image">
+                    <img src="../img/Fahmi.jpg" alt="Fahmi Maulana">
+                </div>
+                <h1 class="cv-name">Fahmi Aqila Maulana</h1>
+                <p class="cv-title">Web Developer & Software Engineer</p>
+                <div class="cv-contact">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>fahmiaqila.m0@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(+62) 821-3916-3361</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Malang, Indonesia</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-github"></i>
+                        <span>github.com/FahmiSie</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Summary -->
+            <section class="cv-section">
+                <h2 class="section-title">
+                    <i class="fas fa-user"></i> Professional Summary
+                </h2>
+                <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.1rem;">
+                    Passionate web developer dan software engineer dengan 3+ tahun pengalaman dalam mengembangkan aplikasi web modern. 
+                    Memiliki keahlian dalam full-stack development dengan fokus pada teknologi frontend dan backend. 
+                    Berpengalaman dalam mengelola proyek dari konsep hingga deployment, dengan kemampuan problem-solving yang kuat 
+                    dan dedikasi tinggi terhadap kualitas kode dan user experience.
+                </p>
+            </section>
+
+            <!-- Work Experience -->
+            <section class="cv-section">
+                <h2 class="section-title">
+                    <i class="fas fa-briefcase"></i> Pengalaman Kerja
+                </h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">Januari 2023 - Juni 2023</div>
+                        <h3 class="timeline-title">Web Developer Intern</h3>
+                        <p class="timeline-subtitle">PT. Tech Solutions Indonesia</p>
+                        <p class="timeline-description">
+                            Mengembangkan website company profile dan sistem manajemen konten menggunakan PHP dan MySQL. 
+                            Bertanggung jawab untuk frontend development dengan HTML, CSS, JavaScript dan optimasi SEO. 
+                            Berkolaborasi dengan tim untuk mengimplementasikan design responsive dan user-friendly interface.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Juli 2022 - Sekarang</div>
+                        <h3 class="timeline-title">Freelance Web Developer</h3>
+                        <p class="timeline-subtitle">Self-Employed</p>
+                        <p class="timeline-description">
+                            Menangani berbagai proyek web development untuk klien lokal dan online. Mengerjakan website sekolah, 
+                            toko online, landing page, dan aplikasi web custom. Menguasai full development cycle dari planning, 
+                            design, development, hingga deployment dan maintenance.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Education -->
+            <section class="cv-section">
+                <h2 class="section-title">
+                    <i class="fas fa-graduation-cap"></i> Pendidikan
+                </h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2019 - 2022</div>
+                        <h3 class="timeline-title">SMK Telkom Malang</h3>
+                        <p class="timeline-subtitle">Rekayasa Perangkat Lunak (RPL)</p>
+                        <p class="timeline-description">
+                            Mempelajari dasar-dasar programming, web development, database design, dan software engineering principles. 
+                            Aktif dalam berbagai kompetisi programming dan web development. Menyelesaikan final project berupa 
+                            sistem informasi sekolah dengan nilai A.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2022 - Sekarang</div>
+                        <h3 class="timeline-title">Universitas Brawijaya</h3>
+                        <p class="timeline-subtitle">Teknik Informatika</p>
+                        <p class="timeline-description">
+                            Melanjutkan studi di bidang Computer Science dengan fokus pada algoritma, data structures, 
+                            software engineering, dan artificial intelligence. Aktif dalam organisasi mahasiswa dan 
+                            berbagai proyek teknologi.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills -->
+            <section class="cv-section">
+                <h2 class="section-title">
+                    <i class="fas fa-code"></i> Technical Skills
+                </h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4><i class="fas fa-laptop-code"></i> Frontend Development</h4>
+                        <div class="skill-item">
+                            <span class="skill-name">HTML5</span>
+                            <div class="skill-level">
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-level="95"></div>
+                                </div>
+                                <span class="skill-percentage">95%</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">CSS3/SASS</span>
+                            <div class="skill-level">
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-level="90"></div>
+                                </div>
+                                <span class="skill-percentage">90%</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">JavaScript</span>
+                            <div class="skill-level">
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-level="85"></div>
+                                </div>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">React.js</span>
+                            <div class="skill-level">
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-level="75"></div>
+                                </div>
+                                <span class="skill-percentage">75%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4><i class="fas fa-server"></i> Backend Development</h4>
+                        <div class="skill-item">
+                            <span class="skill-name">PHP</span>
+                            <div class="skill-level">
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-level="80"></div>
+                                </div>
+                                <span class="skill-percentage">80%</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">MySQL</span>
+                            <div class="skill-level">
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-level="85"></div>
+                                </div>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Node.js</span>
+                            <div class="skill-level">
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-level="70"></div>
+                                </div>
+                                <span class="skill-percentage">70%</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Firebase</span>
+                            <div class="skill-level">
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-level="75"></div>
+                                </div>
+                                <span class="skill-percentage">75%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4><i class="fas fa-tools"></i> Tools & Others</h4>
+                        <div class="skill-item">
+                            <span class="skill-name">Git & GitHub</span>
+                            <div class="skill-level">
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-level="90"></div>
+                                </div>
+                                <span class="skill-percentage">90%</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Figma</span>
+                            <div class="skill-level">
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-level="80"></div>
+                                </div>
+                                <span class="skill-percentage">80%</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Photoshop</span>
+                            <div class="skill-level">
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-level="75"></div>
+                                </div>
+                                <span class="skill-percentage">75%</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Linux/Ubuntu</span>
+                            <div class="skill-level">
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-level="70"></div>
+                                </div>
+                                <span class="skill-percentage">70%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Key Projects -->
+            <section class="cv-section">
+                <h2 class="section-title">
+                    <i class="fas fa-project-diagram"></i> Key Projects
+                </h2>
+                <div class="projects-highlight">
+                    <div class="project-highlight">
+                        <h4>Website Sekolah SMK</h4>
+                        <p>Full-stack website dengan CMS, sistem berita, galeri, dan admin panel. Menggunakan PHP, MySQL, dan responsive design.</p>
+                    </div>
+                    <div class="project-highlight">
+                        <h4>Sistem Point of Sale</h4>
+                        <p>Aplikasi kasir lengkap dengan manajemen inventory, laporan penjualan, dan multi-user access menggunakan PHP dan MySQL.</p>
+                    </div>
+                    <div class="project-highlight">
+                        <h4>E-Commerce Platform</h4>
+                        <p>Platform jual-beli online dengan sistem pembayaran, cart management, dan order tracking. Built with modern web technologies.</p>
+                    </div>
+                    <div class="project-highlight">
+                        <h4>Portfolio Website</h4>
+                        <p>Personal portfolio dengan dark/light mode, smooth animations, dan fully responsive design menggunakan vanilla JavaScript.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Certifications -->
+            <section class="cv-section">
+                <h2 class="section-title">
+                    <i class="fas fa-certificate"></i> Sertifikasi
+                </h2>
+                <div class="certifications">
+                    <div class="cert-card">
+                        <div class="cert-icon">
+                            <i class="fab fa-google"></i>
+                        </div>
+                        <div class="cert-info">
+                            <h4>Google Analytics Certified</h4>
+                            <p>Google • 2023</p>
+                        </div>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="cert-info">
+                            <h4>JavaScript Algorithms and Data Structures</h4>
+                            <p>FreeCodeCamp • 2023</p>
+                        </div>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="cert-info">
+                            <h4>Responsive Web Design</h4>
+                            <p>FreeCodeCamp • 2022</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Languages -->
+            <section class="cv-section">
+                <h2 class="section-title">
+                    <i class="fas fa-language"></i> Bahasa
+                </h2>
+                <div class="languages-grid">
+                    <div class="language-item">
+                        <div class="language-name">Bahasa Indonesia</div>
+                        <div class="language-level">Native</div>
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="language-item">
+                        <div class="language-name">English</div>
+                        <div class="language-level">Intermediate</div>
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="language-item">
+                        <div class="language-name">Jawa</div>
+                        <div class="language-level">Conversational</div>
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Achievements -->
+            <section class="cv-section">
+                <h2 class="section-title">
+                    <i class="fas fa-trophy"></i> Pencapaian
+                </h2>
+                <div class="achievements-grid">
+                    <div class="achievement-card">
+                        <i class="fas fa-medal achievement-icon"></i>
+                        <h4>Juara 2 Web Design Competition</h4>
+                        <p>SMK Telkom Malang 2022</p>
+                    </div>
+                    <div class="achievement-card">
+                        <i class="fas fa-users achievement-icon"></i>
+                        <h4>15+ Happy Clients</h4>
+                        <p>Freelance Projects</p>
+                    </div>
+                    <div class="achievement-card">
+                        <i class="fas fa-code achievement-icon"></i>
+                        <h4>25+ Projects Completed</h4>
+                        <p>Web Development</p>
+                    </div>
+                    <div class="achievement-card">
+                        <i class="fab fa-github achievement-icon"></i>
+                        <h4>Active GitHub Contributor</h4>
+                        <p>32 Public Repositories</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="../img/LogoRekadua.png" alt="FahmiMaw">
+                        <span>FahmiMaw</span>
+                    </div>
+                    <p>Professional web developer ready for new challenges.</p>
+                    <div class="footer-social">
+                        <a href="https://github.com/FahmiSie" target="_blank" rel="noopener" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/fahmi-aqila-maulana-2167b529a" target="_blank" rel="noopener" title="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://www.instagram.com/fahmi_maw/" target="_blank" rel="noopener" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Professional</h3>
+                    <ul>
+                        <li><a href="#">Work Experience</a></li>
+                        <li><a href="#">Skills</a></li>
+                        <li><a href="#">Projects</a></li>
+                        <li><a href="#">Certifications</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="../index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-envelope"></i> fahmiaqila.m0@gmail.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Malang, Indonesia</p>
+                        <p><i class="fab fa-github"></i> github.com/FahmiSie</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 FahmiMaw. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../main.js"></script>
+    <script src="../animations.js"></script>
+    <script>
+        // CV specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCVFeatures();
+        });
+
+        function initializeCVFeatures() {
+            // Animate skill bars
+            const skillBars = document.querySelectorAll('.skill-progress');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const level = entry.target.getAttribute('data-level');
+                        entry.target.style.width = level + '%';
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            skillBars.forEach(bar => observer.observe(bar));
+
+            // Animate sections
+            const sections = document.querySelectorAll('.cv-section');
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => sectionObserver.observe(section));
+        }
+
+        function downloadCV() {
+            // Simulate CV download
+            const link = document.createElement('a');
+            link.href = '#'; // Replace with actual PDF URL
+            link.download = 'FahmiMaulana_CV.pdf';
+            
+            // Show download notification
+            alert('CV akan segera didownload. Fitur ini akan segera tersedia!');
+            
+            // In real implementation, you would have:
+            // link.href = 'path/to/FahmiMaulana_CV.pdf';
+            // link.click();
+        }
+
+        function printCV() {
+            window.print();
+        }
+
+        // GitHub integration
+        async function fetchGitHubStats() {
+            try {
+                // This would fetch real GitHub stats
+                // const response = await fetch('https://api.github.com/users/FahmiSie');
+                // const data = await response.json();
+                
+                // For demo purposes, we'll use static data
+                console.log('GitHub stats would be fetched here');
+            } catch (error) {
+                console.error('Error fetching GitHub stats:', error);
+            }
+        }
+    </script>
+</body>
+</html>

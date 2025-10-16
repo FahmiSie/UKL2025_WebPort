@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - FahmiMaw Portfolio</title>
+    <meta name="description" content="Blog artikel tentang web development, programming tips, dan teknologi terbaru">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Blog Specific Styles */
+        .blog-hero {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            padding: 8rem 0 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .blog-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .blog-hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .blog-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .blog-card {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px var(--shadow-medium);
+        }
+
+        .blog-card-image {
+            height: 200px;
+            background: var(--gradient-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover .blog-card-image img {
+            transform: scale(1.1);
+        }
+
+        .blog-card-category {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .blog-card-content {
+            padding: 2rem;
+        }
+
+        .blog-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .blog-card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .blog-card-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .read-more-btn {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .read-more-btn:hover {
+            gap: 1rem;
+        }
+
+        .blog-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .blog-tag {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 4rem 0;
+        }
+
+        .pagination a {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .pagination a:hover,
+        .pagination a.active {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 3rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        /* Featured Post */
+        .featured-post {
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            padding: 3rem;
+            color: white;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-post::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(50%, -50%);
+        }
+
+        .featured-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .featured-post h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .featured-post p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .featured-btn {
+            background: white;
+            color: var(--primary-color);
+            padding: 0.875rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .featured-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: var(--bg-secondary);
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .newsletter h3 {
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .newsletter p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .newsletter-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-tertiary) 50%, var(--bg-secondary) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        .skeleton-image {
+            height: 200px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .skeleton-text {
+            height: 1rem;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .skeleton-title {
+            height: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .blog-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .featured-post {
+                padding: 2rem;
+                text-align: center;
+            }
+
+            .featured-post h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader">
+            <div class="spinner"></div>
+            <p>Loading Blog...</p>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="scroll-to-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Theme Toggle -->
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <img src="../img/LogoFamTech.jpg" alt="FahmiMaw" />
+                <span>FahmiMaw</span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-links" id="navLinks">
+                <a href="../index.html" class="nav-link">Beranda</a>
+                <div class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Portfolio <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="blog.html">Blog</a>
+                        <a href="projects.html">Projects</a>
+                        <a href="cv.html">CV</a>
+                    </div>
+                </div>
+                <a href="../index.html#about" class="nav-link">Tentang</a>
+                <a href="../index.html#contact" class="nav-link">Kontak</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1 class="fade-in">Blog Development</h1>
+            <p class="fade-in">Berbagi pengetahuan tentang web development, tips programming, dan teknologi terbaru</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Search Bar -->
+        <div class="search-container fade-in">
+            <input type="text" class="search-input" placeholder="Cari artikel..." id="searchInput">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+
+        <!-- Blog Filters -->
+        <div class="blog-filters fade-in">
+            <button class="filter-btn active" data-filter="all">Semua</button>
+            <button class="filter-btn" data-filter="web-development">Web Development</button>
+            <button class="filter-btn" data-filter="javascript">JavaScript</button>
+            <button class="filter-btn" data-filter="css">CSS</button>
+            <button class="filter-btn" data-filter="tutorials">Tutorial</button>
+            <button class="filter-btn" data-filter="tips">Tips & Tricks</button>
+        </div>
+
+        <!-- Featured Post -->
+        <article class="featured-post fade-in">
+            <span class="featured-badge">
+                <i class="fas fa-star"></i> Featured Article
+            </span>
+            <h2>Menguasai Modern CSS: Grid, Flexbox, dan Animasi</h2>
+            <p>Pelajari teknik CSS terbaru untuk membuat layout responsif yang indah dan animasi yang smooth. Tutorial lengkap dengan contoh praktis dan best practices.</p>
+            <a href="#" class="featured-btn" onclick="openArticle('css-modern')">
+                Baca Selengkapnya <i class="fas fa-arrow-right"></i>
+            </a>
+        </article>
+
+        <!-- Blog Grid -->
+        <div class="blog-grid" id="blogGrid">
+            <!-- Article 1 -->
+            <article class="blog-card fade-in" data-category="javascript">
+                <div class="blog-card-image">
+                    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                        <i class="fab fa-js-square"></i>
+                    </div>
+                    <span class="blog-card-category">JavaScript</span>
+                </div>
+                <div class="blog-card-content">
+                    <div class="blog-card-meta">
+                        <span><i class="fas fa-calendar"></i> 15 Des 2024</span>
+                        <span><i class="fas fa-clock"></i> 8 min read</span>
+                    </div>
+                    <h3 class="blog-card-title">Asynchronous JavaScript: Promise, Async/Await</h3>
+                    <p class="blog-card-excerpt">Memahami konsep asynchronous programming dalam JavaScript dengan Promise dan async/await. Termasuk error handling dan best practices.</p>
+                    <div class="blog-card-footer">
+                        <a href="#" class="read-more-btn" onclick="openArticle('async-js')">
+                            Baca <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <div class="blog-tags">
+                            <span class="blog-tag">ES6+</span>
+                            <span class="blog-tag">Promise</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Article 2 -->
+            <article class="blog-card fade-in" data-category="web-development">
+                <div class="blog-card-image">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <span class="blog-card-category">Web Development</span>
+                </div>
+                <div class="blog-card-content">
+                    <div class="blog-card-meta">
+                        <span><i class="fas fa-calendar"></i> 12 Des 2024</span>
+                        <span><i class="fas fa-clock"></i> 6 min read</span>
+                    </div>
+                    <h3 class="blog-card-title">Responsive Design: Mobile-First Approach</h3>
+                    <p class="blog-card-excerpt">Strategi dan teknik untuk membuat website yang responsif dengan pendekatan mobile-first. Termasuk breakpoints dan optimisasi performa.</p>
+                    <div class="blog-card-footer">
+                        <a href="#" class="read-more-btn" onclick="openArticle('responsive-design')">
+                            Baca <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <div class="blog-tags">
+                            <span class="blog-tag">Responsive</span>
+                            <span class="blog-tag">Mobile</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Article 3 -->
+            <article class="blog-card fade-in" data-category="css">
+                <div class="blog-card-image">
+                    <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                        <i class="fab fa-css3-alt"></i>
+                    </div>
+                    <span class="blog-card-category">CSS</span>
+                </div>
+                <div class="blog-card-content">
+                    <div class="blog-card-meta">
+                        <span><i class="fas fa-calendar"></i> 10 Des 2024</span>
+                        <span><i class="fas fa-clock"></i> 5 min read</span>
+                    </div>
+                    <h3 class="blog-card-title">CSS Custom Properties (Variables): Panduan Lengkap</h3>
+                    <p class="blog-card-excerpt">Cara menggunakan CSS Variables untuk membuat kode yang lebih maintainable dan dynamic theming. Dengan contoh praktis implementasi.</p>
+                    <div class="blog-card-footer">
+                        <a href="#" class="read-more-btn" onclick="openArticle('css-variables')">
+                            Baca <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <div class="blog-tags">
+                            <span class="blog-tag">CSS3</span>
+                            <span class="blog-tag">Theming</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Article 4 -->
+            <article class="blog-card fade-in" data-category="tutorials">
+                <div class="blog-card-image">
+                    <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <span class="blog-card-category">Tutorial</span>
+                </div>
+                <div class="blog-card-content">
+                    <div class="blog-card-meta">
+                        <span><i class="fas fa-calendar"></i> 8 Des 2024</span>
+                        <span><i class="fas fa-clock"></i> 12 min read</span>
+                    </div>
+                    <h3 class="blog-card-title">Membangun Portfolio Website dari Nol</h3>
+                    <p class="blog-card-excerpt">Tutorial step-by-step membuat portfolio website yang profesional menggunakan HTML, CSS, dan JavaScript. Termasuk deployment ke GitHub Pages.</p>
+                    <div class="blog-card-footer">
+                        <a href="#" class="read-more-btn" onclick="openArticle('portfolio-tutorial')">
+                            Baca <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <div class="blog-tags">
+                            <span class="blog-tag">Portfolio</span>
+                            <span class="blog-tag">GitHub</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Article 5 -->
+            <article class="blog-card fade-in" data-category="tips">
+                <div class="blog-card-image">
+                    <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); height: 100%; display: flex; align-items: center; justify-content: center; color: #333; font-size: 3rem;">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <span class="blog-card-category">Tips & Tricks</span>
+                </div>
+                <div class="blog-card-content">
+                    <div class="blog-card-meta">
+                        <span><i class="fas fa-calendar"></i> 5 Des 2024</span>
+                        <span><i class="fas fa-clock"></i> 4 min read</span>
+                    </div>
+                    <h3 class="blog-card-title">10 Tips Optimasi Performa Website</h3>
+                    <p class="blog-card-excerpt">Kumpulan tips praktis untuk meningkatkan performa website Anda. Mulai dari optimasi gambar hingga lazy loading dan caching strategies.</p>
+                    <div class="blog-card-footer">
+                        <a href="#" class="read-more-btn" onclick="openArticle('performance-tips')">
+                            Baca <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <div class="blog-tags">
+                            <span class="blog-tag">Performance</span>
+                            <span class="blog-tag">SEO</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Article 6 -->
+            <article class="blog-card fade-in" data-category="web-development">
+                <div class="blog-card-image">
+                    <div style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); height: 100%; display: flex; align-items: center; justify-content: center; color: #333; font-size: 3rem;">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <span class="blog-card-category">Web Development</span>
+                </div>
+                <div class="blog-card-content">
+                    <div class="blog-card-meta">
+                        <span><i class="fas fa-calendar"></i> 3 Des 2024</span>
+                        <span><i class="fas fa-clock"></i> 10 min read</span>
+                    </div>
+                    <h3 class="blog-card-title">REST API dengan PHP dan MySQL</h3>
+                    <p class="blog-card-excerpt">Panduan lengkap membuat REST API menggunakan PHP native dan MySQL. Termasuk authentication, error handling, dan dokumentasi API.</p>
+                    <div class="blog-card-footer">
+                        <a href="#" class="read-more-btn" onclick="openArticle('rest-api-php')">
+                            Baca <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <div class="blog-tags">
+                            <span class="blog-tag">PHP</span>
+                            <span class="blog-tag">API</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <h3>Stay Updated</h3>
+            <p>Dapatkan artikel terbaru langsung di inbox Anda</p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" class="newsletter-input" placeholder="Email Anda" required>
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="../img/LogoFamTech.jpg" alt="FahmiMaw">
+                        <span>FahmiMaw</span>
+                    </div>
+                    <p>Sharing knowledge through code and creativity.</p>
+                    <div class="footer-social">
+                        <a href="https://github.com/FahmiSie" target="_blank" rel="noopener" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/fahmi-aqila-maulana-2167b529a" target="_blank" rel="noopener" title="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://www.instagram.com/fahmi_maw/" target="_blank" rel="noopener" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Blog Categories</h3>
+                    <ul>
+                        <li><a href="#">Web Development</a></li>
+                        <li><a href="#">JavaScript</a></li>
+                        <li><a href="#">CSS</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="cv.html">CV</a></li>
+                        <li><a href="../index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-envelope"></i> famtech.net@gmail.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Malang, Indonesia</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 FahmiMaw. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Article Modal -->
+    <div id="articleModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <span class="close" onclick="closeArticle()">&times;</span>
+            <div id="articleContent"></div>
+        </div>
+    </div>
+
+    <script src="../main.js"></script>
+    <script src="../animations.js"></script>
+    <script>
+        // Blog specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeBlogFeatures();
+        });
+
+        function initializeBlogFeatures() {
+            // Filter functionality
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const blogCards = document.querySelectorAll('.blog-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filter = btn.getAttribute('data-filter');
+                    
+                    blogCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                            card.classList.add('fade-in');
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                
+                blogCards.forEach(card => {
+                    const title = card.querySelector('.blog-card-title').textContent.toLowerCase();
+                    const excerpt = card.querySelector('.blog-card-excerpt').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || excerpt.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+
+            // Newsletter form
+            const newsletterForm = document.getElementById('newsletterForm');
+            newsletterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = e.target.querySelector('.newsletter-input').value;
+                
+                // Simulate subscription
+                alert('Terima kasih! Email ' + email + ' berhasil didaftarkan untuk newsletter.');
+                e.target.reset();
+            });
+        }
+
+        // Article content data
+        const articles = {
+            'css-modern': {
+                title: 'Menguasai Modern CSS: Grid, Flexbox, dan Animasi',
+                date: '15 Des 2024',
+                author: 'Fahmi Maulana',
+                content: `
+                    <h2>Pengantar Modern CSS</h2>
+                    <p>CSS telah berkembang pesat dalam beberapa tahun terakhir. Dari CSS Grid hingga Flexbox, dan berbagai properti animasi yang powerful, kita sekarang memiliki tools yang sangat kuat untuk membuat layout yang complex dan interaktif.</p>
+                    
+                    <h3>CSS Grid Layout</h3>
+                    <p>CSS Grid adalah sistem layout 2D yang memungkinkan kita untuk membuat layout yang complex dengan mudah:</p>
+                    <pre><code>.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}</code></pre>
+                    
+                    <h3>Flexbox untuk Layout 1D</h3>
+                    <p>Flexbox perfect untuk layout dalam satu dimensi:</p>
+                    <pre><code>.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}</code></pre>
+                    
+                    <h3>Animasi CSS</h3>
+                    <p>Membuat animasi smooth dengan CSS:</p>
+                    <pre><code>@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.animated-element {
+  animation: slideIn 0.5s ease-out;
+}</code></pre>
+                    
+                    <p>Dengan menguasai teknik-teknik ini, Anda dapat membuat website yang tidak hanya fungsional tapi juga visually appealing dan engaging.</p>
+                `
+            },
+            'async-js': {
+                title: 'Asynchronous JavaScript: Promise, Async/Await',
+                date: '15 Des 2024',
+                author: 'Fahmi Maulana',
+                content: `
+                    <h2>Memahami Asynchronous JavaScript</h2>
+                    <p>JavaScript adalah bahasa single-threaded, tapi kita bisa menjalankan operasi asynchronous menggunakan Promise dan async/await.</p>
+                    
+                    <h3>Promise Basics</h3>
+                    <p>Promise memungkinkan kita handle operasi asynchronous:</p>
+                    <pre><code>const fetchData = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('Data loaded successfully!');
+    }, 1000);
+  });
+};
+
+fetchData()
+  .then(data => console.log(data))
+  .catch(error => console.error(error));</code></pre>
+                    
+                    <h3>Async/Await Syntax</h3>
+                    <p>Async/await membuat code asynchronous lebih readable:</p>
+                    <pre><code>async function loadData() {
+  try {
+    const data = await fetchData();
+    console.log(data);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}</code></pre>
+                    
+                    <h3>Error Handling</h3>
+                    <p>Selalu handle error dengan try/catch atau .catch():</p>
+                    <pre><code>async function safeApiCall() {
+  try {
+    const response = await fetch('/api/data');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('API call failed:', error);
+    return null;
+  }
+}</code></pre>
+                `
+            }
+            // Add more articles here...
+        };
+
+        function openArticle(articleId) {
+            const article = articles[articleId];
+            if (!article) {
+                alert('Artikel belum tersedia. Coming soon!');
+                return;
+            }
+
+            const modal = document.getElementById('articleModal');
+            const content = document.getElementById('articleContent');
+            
+            content.innerHTML = `
+                <div class="article-header" style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border-color);">
+                    <h1 style="color: var(--text-primary); margin-bottom: 0.5rem;">${article.title}</h1>
+                    <div style="color: var(--text-secondary); display: flex; gap: 1rem;">
+                        <span><i class="fas fa-user"></i> ${article.author}</span>
+                        <span><i class="fas fa-calendar"></i> ${article.date}</span>
+                    </div>
+                </div>
+                <div class="article-body" style="color: var(--text-primary); line-height: 1.8;">
+                    ${article.content}
+                </div>
+                <div class="article-footer" style="margin-top: 2rem; padding-top: 1rem; border-top: 2px solid var(--border-color);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="article-tags">
+                            <span style="background: var(--bg-secondary); padding: 0.25rem 0.75rem; border-radius: 15px; margin-right: 0.5rem;">Tutorial</span>
+                        </div>
+                        <div class="article-share">
+                            <a href="https://github.com/FahmiSie" target="_blank" style="color: var(--primary-color); text-decoration: none; margin: 0 0.5rem;">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#" onclick="shareArticle('${articleId}')" style="color: var(--primary-color); text-decoration: none; margin: 0 0.5rem;">
+                                <i class="fas fa-share"></i> Share
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+        }
+
+        function closeArticle() {
+            const modal = document.getElementById('articleModal');
+            modal.style.display = 'none';
+        }
+
+        function shareArticle(articleId) {
+            if (navigator.share) {
+                navigator.share({
+                    title: articles[articleId].title,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(window.location.href);
+                alert('Link berhasil disalin ke clipboard!');
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('articleModal');
+            if (event.target === modal) {
+                closeArticle();
+            }
+        }
+    </script>
+</body>
+</html>
