@@ -160,7 +160,7 @@ Cukup buka `index.html` di browser
 **Fahmi Maulana**  
 - 🌐 Website: [fahmimaw.dev](https://fahmimaw.dev)  
 - 💼 LinkedIn: [fahmi-aqila-maulana](https://www.linkedin.com/in/fahmi-aqila-maulana-2167b529a)  
-- 💻 GitHub: [@fahmimaw](https://github.com/fahmimaw)  
+- 💻 GitHub: [@fahmimaw](https://github.com/FahmiSie)  
 - 📧 Email: famtech.net@gmail.com  
 
 ---
